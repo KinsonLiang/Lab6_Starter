@@ -9,7 +9,7 @@ class RecipeCard extends HTMLElement {
     // EXPOSE - START (All expose numbers start with A)
 
     // A1. TODO - Attach the shadow DOM to this Web Component (leave the mode open)
-    const shadow_open = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: "open" });
 
     // A2. TODO - Create an <article> element - This will hold our markup once our data is set
     const article = document.createElement("article");
@@ -18,25 +18,21 @@ class RecipeCard extends HTMLElement {
     const style = document.createElement("style");
 
     // A4. TODO - Insert all of the styles from cardTemplate.html into the <style> element you just made
-    style.textContent = `* 
-    {
+    style.textContent = `* {
       font-family: sans-serif;
       margin: 0;
       padding: 0;
     }
   
-    a 
-    {
+    a {
       text-decoration: none;
     }
   
-    a:hover 
-    
+    a:hover {
       text-decoration: underline;
     }
   
-    article 
-    {
+    article {
       align-items: center;
       border: 1px solid rgb(223, 225, 229);
       border-radius: 8px;
@@ -54,16 +50,14 @@ class RecipeCard extends HTMLElement {
       display: flex;
     }
   
-    div.rating>img 
-    {
+    div.rating>img {
       height: auto;
       display: inline-block;
       object-fit: scale-down;
       width: 78px;
     }
   
-    article>img 
-    {
+    article>img {
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
       height: 118px;
@@ -72,21 +66,18 @@ class RecipeCard extends HTMLElement {
       width: calc(100% + 32px);
     }
   
-    p.ingredients 
-    {
+    p.ingredients {
       height: 32px;
       line-height: 16px;
       padding-top: 4px;
       overflow: hidden;
     }
   
-    p.organization 
-    {
+    p.organization {
       color: black !important;
     }
   
-    p.title 
-    {
+    p.title {
       display: -webkit-box;
       font-size: 16px;
       height: 36px;
@@ -98,15 +89,14 @@ class RecipeCard extends HTMLElement {
   
     p:not(.title),
     span,
-    time 
-    {
+    time {
       color: #70757A;
       font-size: 12px;
     }`
 
     // A5. TODO - Append the <style> and <article> elements to the Shadow DOM
-    shadow_open.appendChild(style);
-    shadow_open.appendChild(article);
+    shadow.appendChild(style);
+    shadow.appendChild(article);
   }
 
   /**
@@ -130,20 +120,19 @@ class RecipeCard extends HTMLElement {
    *                          "ingredients": "string"
    *                        }
    */
-  set data(data) 
-  {
+  set data(data) {
     // If nothing was passed in, return
     if (!data) return;
 
     // A6. TODO - Select the <article> we added to the Shadow DOM in the constructor
-    let the_article = this.shadowRoot.querySelector('article')
+    const articleObj = this.shadowRoot.querySelector('article')
   
     // A7. TODO - Set the contents of the <article> with the <article> template given in
     //           cardTemplate.html and the data passed in (You should only have one <article>,
     //           do not nest an <article> inside another <article>). You should use Template
     //           literals (template strings) and element.innerHTML for this.
-    let image_source = "./assets/images/icons/" + `${data["rating"]}` + "-star.svg"
-    the_article.innerHTML = `
+    let ratingImgSrc = "./assets/images/icons/" + `${data["rating"]}` + "-star.svg"
+    articleObj.innerHTML = `
     <img src="${data["imgSrc"]}"
       alt="${data["imgAlt"]}">
     <p class="title">
@@ -152,7 +141,7 @@ class RecipeCard extends HTMLElement {
     <p class="organization">${data["organization"]}</p>
     <div class="rating">
       <span>${data["rating"]}</span>
-      <img src="${image_source}" alt="${data["rating"]} stars">
+      <img src="${ratingImgSrc}" alt="${data["rating"]} stars">
       <span>(${data["numRatings"]})</span>
     </div>
     <time>${data["lengthTime"]}</time>
